@@ -5,14 +5,20 @@ import { Input } from '../../components/Input'
 import { Header } from '../../components/Header'
 import { Section } from '../../components/Section'
 import { ButtonText } from '../../components/ButtonText'
-
 import { Container, Brand, Menu, Search, Content, NewNote } from './styles'
+
+import { Link } from 'react-router-dom';
 
 export function Home() {
   return (
     <Container>
       <Brand>
-        <h1>React Notes</h1>
+
+        <h1 >
+          <Link to='/'>
+            React Notes
+          </Link>
+        </h1>
       </Brand>
       <Header></Header>
       <Menu>
@@ -33,7 +39,7 @@ export function Home() {
         <Section title="Minhas notas" />
         <Note data={{ title: 'React', tags: [{ id: "1", name: "react" }, { id: "2", name: "go" }] }} />
       </Content>
-      <NewNote>
+      <NewNote to="/new">
         <FiPlus />
         Criar nota
       </NewNote>
