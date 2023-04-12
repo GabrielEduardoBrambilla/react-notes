@@ -17,7 +17,7 @@ export function Profile() {
         <img src="https://github.com/GabrielEduardoBrambilla.png" alt="foto de usuario" />
         <label htmlFor="avatar">
           <FiCamera />
-          <input type="text" id="avatar" type="file" />
+          <input id="avatar" type="file" />
         </label>
       </Avatar>
       <Input
