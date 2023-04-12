@@ -41,7 +41,11 @@ export const Search = styled.view`
   grid-area: search;
   padding: 64px 64px 0;
 `
-export const Content = styled.view``
+export const Content = styled.view`
+  grid-area: content;
+  padding: 0px 64px;
+  overflow-y: auto1;
+`
 export const NewNote = styled.view`
   grid-area: newnote;
 
