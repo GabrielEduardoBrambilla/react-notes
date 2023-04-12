@@ -17,7 +17,7 @@ export function Home() {
       <Header></Header>
       <Menu>
         <li>
-          <ButtonText title="Todos"></ButtonText>
+          <ButtonText title="Todos" isActive></ButtonText>
         </li>
         <li>
           <ButtonText title="React"></ButtonText>

@@ -8,7 +8,7 @@ export const Container = styled.header`
 
   border-bottom-width: 1px;
   border-bottom-style: solid;
-  border-bottom-color: ${({ theme }) => theme.COLORS.BACKGROUND_800};
+  border-bottom-color: ${({ theme }) => theme.COLORS.BACKGROUND_700};
   color: ${({ theme }) => theme.COLORS.WHITE};
 
   display: flex;

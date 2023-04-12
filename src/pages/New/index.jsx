@@ -1,7 +1,10 @@
 import { Container, Form } from "./styles";
-import { Header } from '../../components/Header'
 import { Input } from '../../components/Input'
+import { Header } from '../../components/Header'
+import { Button } from '../../components/Button'
+import { Section } from '../../components/Section'
 import { Textarea } from '../../components/Textarea'
+import { NoteItem } from '../../components/NoteItem'
 
 export function New() {
   return (
@@ -17,6 +20,19 @@ export function New() {
 
           <Input placeholder="Titulo" />
           <Textarea placeholder="Observações" />
+          <Section title="Links úteis">
+            <NoteItem value="https://google.com" />
+            <NoteItem isNew placeholder="Novo Link" />
+          </Section>
+          <Section title="Marcadores">
+            <div className="tags">
+              <NoteItem value="react" />
+              <NoteItem isNew placeholder="Nova Tag" />
+            </div>
+
+          </Section>
+
+          <Button title="Salvar" />
         </Form>
       </main>
     </Container>
