@@ -37,7 +37,10 @@ export const Menu = styled.ul`
   grid-area: menu;
   background-color: ${({ theme }) => theme.COLORS.BACKGROUND_900};
 `
-export const Search = styled.view``
+export const Search = styled.view`
+  grid-area: search;
+  padding: 64px 64px 0;
+`
 export const Content = styled.view``
 export const NewNote = styled.view`
   grid-area: newnote;
