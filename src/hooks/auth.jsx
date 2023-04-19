@@ -13,7 +13,7 @@ function AuthProvider({ children }) {
       localStorage.setItem("@reactnotes:user", JSON.stringify(user))
       localStorage.setItem("@reactnotes:token", token)
 
-      api.defaults.headers.authorization = `Bearer ${token}`
+      api.defaults.headers.common['Authorization'] = `Bearer ${token}`
 
       setData({ user, token })
 
@@ -33,12 +33,38 @@ function AuthProvider({ children }) {
     setData({})
   }
 
+  async function updateProfile({ user, avatarFile }) {
+    try {
+
+      if (avatarFile) {
+        const fileUploadForm = new FormData()
+        fileUploadForm.append("avatar", avatarFile)
+
+        const response = await api.patch("/users/avatar", fileUploadForm)
+        user.avatar = response.data.avatar
+      }
+
+      await api.put('/users', user)
+      localStorage.setItem('@reactnotes:user', JSON.stringify(user))
+
+      setData({ user, token: data.token })
+
+
+    } catch (error) {
+      if (error.response) {
+        alert(error.response.data.message)
+      } else {
+        alert("Não foi possivel atualizar o perfil")
+      }
+    }
+  }
+
   useEffect(() => {
     const token = localStorage.getItem("@reactnotes:token")
     const user = localStorage.getItem("@reactnotes:user")
 
     if (token && user) {
-      api.defaults.headers.authorization = `Bearer ${token}`
+      api.defaults.headers.common['Authorization'] = `Bearer ${token}`
 
       setData({
         token, user: JSON.parse(user)
@@ -47,7 +73,7 @@ function AuthProvider({ children }) {
   }, [])
 
   return (
-    <AuthContext.provider value={{ signIn, user: data.user, singOut }}>
+    <AuthContext.provider value={{ signIn, updateProfile, singOut, user: data.user }}>
       {children}
     </AuthContext.provider>
   )
