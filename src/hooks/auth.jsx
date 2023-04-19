@@ -6,7 +6,6 @@ function AuthProvider({ children }) {
   const [data, setData] = useState("")
 
   async function signIn({ email, password }) {
-
     try {
       const response = await api.post("/sessions", { email, password })
       const { user, token } = response.data
@@ -15,7 +14,6 @@ function AuthProvider({ children }) {
       localStorage.setItem("@reactnotes:token", token)
 
       api.defaults.headers.authorization = `Bearer ${token}`
-
 
       setData({ user, token })
 
@@ -26,7 +24,13 @@ function AuthProvider({ children }) {
         alert("Não foi possivel entrar")
       }
     }
+  }
 
+  function singOut() {
+    localStorage.removeItem("@reactnotes:token")
+    localStorage.removeItem("@reactnotes:user")
+
+    setData({})
   }
 
   useEffect(() => {
@@ -43,7 +47,7 @@ function AuthProvider({ children }) {
   }, [])
 
   return (
-    <AuthContext.provider value={{ signIn, user: data.user }}>
+    <AuthContext.provider value={{ signIn, user: data.user, singOut }}>
       {children}
     </AuthContext.provider>
   )
