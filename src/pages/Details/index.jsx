@@ -4,38 +4,82 @@ import { Header } from '../../components/Header'
 import { Section } from '../../components/Section'
 import { ButtonText } from '../../components/ButtonText'
 import { Tag } from '../../components/Tag'
+import { useParams, useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { api } from '../../services/api'
+
 
 export function Details() {
+  const params = useParams()
+  const navigate = useNavigate()
+  const [data, setData] = useState(null)
+
+  function handleBack() {
+    navigate(-1)
+  }
+
+  async function handleRemove() {
+    const confirm = window.confirm('Deseja mesmo fazer isso')
+
+    if (confirm) {
+      await api.delete(`/notes/${params.id}`)
+      navigate(-1)
+    }
+  }
+
+  useEffect(() => {
+    async function fetchNote() {
+      const response = await api.get(`/notes/${params.id}`)
+      setData(response.data)
+    }
+
+    fetchNote()
+  }, [])
+
+
   return (
     <Container>
       <Header />
-      <main>
-        <Content>
-          <ButtonText title='Excluir nota' />
-          <h1>
-            Introdução a react
-          </h1>
-          <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem est amet, facilis libero quas eaque maiores architecto cum culpa placeat qui odit omnis officiis molestiae quae quibusdam iure, enim nam.
-            Blanditiis quidem architecto, perferendis numquam nobis distinctio eligendi illum maxime neque vel velit voluptates id ut ipsa cum excepturi iure harum quibusdam. Itaque, qui culpa non fugit enim ullam quam.
-            Nisi placeat ratione minus id nihil consequatur architecto. Excepturi ipsam natus obcaecati quaerat non placeat, unde odit atque rerum fugit accusamus autem fuga tempora dignissimos ex aperiam, voluptatem nisi quis.
-          </p>
-          <Section title="Links úteis">
-            <Links>
-              <li>
-                <a href="#">sadsadsad</a>
-              </li>
-              <li><a href="">okoko</a></li>
-            </Links>
-          </Section>
-          <Section title="Marcadores">
-            <Tag title='Express' />
-            <Tag title='Node' />
+      {data &&
+        <main>
+          <Content>
+            <ButtonText title='Excluir nota'
+              onClick={handleRemove} />
+            <h1>
+              data.title
+            </h1>
+            <p>
+              data.description
+            </p>
+            {
+              data.links &&
+              <Section title="Links úteis">
+                <Links>
+                  {
+                    data.link.map(link => (
+                      <li key={String(link.id)}>
+                        <a href={link.url} target='_blanc'>{link.url}</a>
+                      </li>
 
-          </Section>
-          <Button title='Enviar' />
-        </Content>
-      </main>
+                    ))
+                  }
+                </Links>
+              </Section>}
+            {
+              data.tags &&
+              <Section title="Marcadores">
+                {
+                  data.tags.map(link => (
+                    <Tag title={tag.name}
+                      key={String(tag.id)} />
+                  ))
+                }
+              </Section>
+            }
+            <Button title='Voltar' onClick={handleBack} />
+          </Content>
+        </main>
+      }
     </Container>
 
   )

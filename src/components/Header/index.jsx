@@ -6,6 +6,12 @@ import { api } from '../../services/api'
 export function Header() {
   const { singOut } = useAuth()
   const avatarUrl = user.avatar ? `${api.defaults.baseURL}/files${user.avatar}` : avatarPlaceholder
+  const navigation = useNavigate()
+
+  function handleSingOut() {
+    navigation("/")
+    singOut()
+  }
 
   return (
     <Container>
@@ -16,7 +22,7 @@ export function Header() {
           <strong>{user.name}</strong>
         </div>
       </Profile>
-      <Logout onClick={singOut}>
+      <Logout onClick={handleSingOut}>
         <RiShutDownLine />
       </Logout>
     </Container>
