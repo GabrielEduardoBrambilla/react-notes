@@ -1,21 +1,23 @@
 import { createContext, useContext, useState, useEffect } from 'react'
-import { api } from '../services/api'
+
 export const AuthContext = createContext({})
 
+import { api } from '../services/api'
+
 function AuthProvider({ children }) {
-  const [data, setData] = useState("")
+  const [data, setData] = useState({})
 
   async function signIn({ email, password }) {
     try {
       const response = await api.post("/sessions", { email, password })
-      const { user, token } = response.data
+      const { token, user } = response.data
 
       localStorage.setItem("@reactnotes:user", JSON.stringify(user))
       localStorage.setItem("@reactnotes:token", token)
 
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`
 
-      setData({ user, token })
+      setData({ token, user })
 
     } catch (error) {
       if (error.response) {
@@ -73,14 +75,15 @@ function AuthProvider({ children }) {
   }, [])
 
   return (
-    <AuthContext.provider value={{ signIn, updateProfile, singOut, user: data.user }}>
+    <AuthContext.Provider value={{ signIn, updateProfile, singOut, user: data.user }}>
       {children}
-    </AuthContext.provider>
+    </AuthContext.Provider>
   )
 }
 
 function useAuth() {
   const context = useContext(AuthContext)
+
   return context
 }
 

@@ -72,7 +72,7 @@ export function New() {
         <Form>
           <header>
             <h1>Criar nota</h1>
-            <Link onClick={handleBack} >voltar</Link>
+            <Link to="/"  >voltar</Link>
           </header>
 
           <Input

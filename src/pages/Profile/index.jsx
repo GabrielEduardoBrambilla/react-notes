@@ -48,7 +48,7 @@ export function Profile() {
 
   return <Container>
     <header>
-      <Link to="/home" onClick={handleBack}>
+      <Link to="/" >
         <FiArrowLeft />
       </Link>
     </header>

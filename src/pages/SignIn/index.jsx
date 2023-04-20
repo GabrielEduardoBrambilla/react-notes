@@ -1,5 +1,6 @@
 import { Container, Form, Background } from "./styles";
 import { Input } from "../../components/Input";
+import { useState } from "react";
 
 import { Link } from 'react-router-dom';
 
@@ -32,7 +33,7 @@ export function SignIn() {
           onChange={e => setEmail(e.target.value)}
         />
         <Input
-          placeholder="*****"
+          placeholder="Senha"
           type="password"
           icon={FiLock}
           onChange={e => setPassword(e.target.value)}
@@ -41,9 +42,6 @@ export function SignIn() {
 
         <Link to="/register">
           Criar Conta
-        </Link>
-        <Link to="/home">
-          Backdoor - entrar na aplicação
         </Link>
       </Form>
       <Background />
